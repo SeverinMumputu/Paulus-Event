@@ -1,0 +1,90 @@
+un site internet corporate premium couvert par un style épuré destiné à une agence évenementielle nommée Paulus Event qui est une structure évenementielle 
+en charge d'organisations d'événements pour les entreprises, organismes, collectivités, individus et autres, proposant ainsi des prestations de services 
+spécialisés et de tâches de qualité.
+Le but est de concevoir un site vitrine au style ultra corporate dans un design épuré, dominé par une forte présence de la couleur blanche, suivi de la cou 
+leur d'or premium et un petit trait de noir. 
+Paulus Event est une entreprise émergeante siégée à Kinshasa, fortement solicitée pour les services de prestations qu'elle propose. Le travail attendu est de créer 
+ce site vitrine ultra corporate premium épuré qui doit se rapporter à l'image de l'entreprise florissante. Et pour ce faire, ce site vitrine sera 
+doté de plusieurs sections et fonctionnalités dignes d'un site premium :
+
+1/Un header premium dans un style épuré comprennant :
+- le nom de l'entreprise(Paulus Event) à gauche avec une Typographie professionnelle.
+- Des liens bien au centre qui sont : Paulus Event, Prestations(Services), Evenements, Tâches, Réservation, Galérie, contact.
+
+2/Un hero : après le header, on retrouve un hero contenant un carrousel d'images premium avec boutons de pagination. En plus de cela, en bas de certaines 
+images on retrouvera une petite description des événements qui ont été organisés par l'entreprise. Des informations essentielles à savoir pour la propagande.
+Le but de ce carroussel est de mettre en lumière nos images et les événements réels que Paulus Event a organisés. 
+Un carroussel d'images avec de boutons de pagination premium. Ces boutons ne doivent pas gêner les images et les dscriptions. Un bloc pour la description 
+doté d'un style premium épuré.
+
+3/L'exposition des sections en grande ligne : après le hero, on retrouve plusieurs sections qui parle de l'entreprise et de ce que l'entreprise fait :
+
+- La section Paulus Event : une zone où on parle de l'entreprise et ajouter à cela des slogans descriptifs avec de logo de qualités vectorielles SVG.
+Des slogans qui mettent en valeurs le travail de Paulus Event tels que : transformer vos idées en expérience inoubliable en alliant engagement, excellence, 
+professionalisme.
+
+- La section Prestations : où on retrouve une gamme complète de services que nous offrons tels que Photographie, Accueil & Protocole, Maître de 
+cérémonie, Cocktail, Service traiteur, Décoration , DJ, Humoriste. Cette section exige une disposition professionnelle de chaque service dans un bloc épuré 
+qui se marie bien avec l'image et à ajouter un badge premium dans le bloc. Une animation hover stylée pour les images à chaque clic.
+
+- La section Evenements : Ici les idées prennent chair avec la variété des événements que Paulus Event organise tels que Mariage, Anniversaire, Conférence, 
+Funérailles, Soirée de Gala, Festivals. Le but est de renvoyer le client dans la concrétisation de son idée à travers ce qu'on propose avec un style de blocs
+épuré et imagé digne d'un site de qualité.
+
+- La section Tâche : Afin d'assurer la réussite de l'événement, Paulus Event adopte une approche méthodique définissant des tâches bien claires et 
+structurées qui menèront à bon port l'évenement, selon les délais convenus et le standars de l'agence. Les tâches sont :
+- organisation
+- Planiication
+- Gestion 
+- Conception 
+- Coordination 
+- Conseiller de suggestion
+- Création support marketing 
+- Budget 
+- FeedBack 
+Donner envie au client de nous laisser organiser l'événement et n'oublie pas de renchérir les tâches au moment de description dans chaque bloc.
+
+- La section Réservation : Le but est proposer un processus de réservation simple et efficace sans remplissage de formulaire en indiquant les informations essentielles 
+pour l'organisation de l'évenement que le client doit fournir tels que nom de l'événement, type de l'événement, date de l'événement, Heure de l'événement(Début et fin), lieu de 
+l'événement, Nombre maximum de partcipants, le budget et ensuite mettre une question 'Avez-vous compris les informations à fournir ? ' 
+Après avoir clqiué sur OUI, un bloc contenant l'icône de Whatsapp apparaît et à chaque clic, il est redirigé dans le compte Whatsapp de l'agence.
+En cas de clique sur NON, il est redirigé à lire encore une fois les infos à fournir. L'agence est encore émergeante, cela implique des solutions simples et avec le temps inclure des solutions dynamiques.
+Par conséquent, aucune présence de formulaire. Proposer un bloc épuré qui indique le client avec une bonne disposition d'étapes d'informations à fournir 
+et conclure  avec la redirection vers le réseau Whatsapp.
+
+- La section Galérie : elle fait office de portefolio où on retrouve les images et vidéos de nos récentes organisations et événements. Une description détaillée 
+de chaque événement avec la date, l'heure, le lieu, le MC, les informations supplémentaires. On fait revivre au client les sensations de l'événement à travers 
+des images et vidéos. Ajouter à cela, une fonctionnalité permettant au client de télécharger les images et vidéos d'un événement régroupé en catalogue 
+pour séparer les événements. Etant donné, la complexité des informations et le nombre immense de données et fichiers, quoi de mieuxx de rajouter 
+un système de filtrage qui regroupe par date chaque événement permettant d'afficher les informations complètes et exclusives de l'évenement concerné telles 
+que photos, vidéos, détails sur l'organisation. 
+Et pour finir, classifier les imagess et vidéos selon les moments de l'événement par exemple : Allocution d'entrée du Mc, danse et accompagnent de la mariée,
+Présentation des mariés, Biographie de mariés, remise de cadeux, piste dansante, heure du repas. L'objectif est de faire revivre le client chaque moment de 
+son événement à travers des images et vidéos soutenues par des descriptions détaillées, géréés par un système de filtrage premium et une fonctionnalité de 
+télécharger pour immortaliser l'événement.
+
+- La section contact : le but est de présenter les icônes de réseaux sociaux(Facebook, Instagram, Tiktok, Linkedin  Whatsapp)
+dans une disposition alignée en colonne positionée à droite disponible pour le mode Pc et mobile Responsive sans gêner le reste des composants.
+
+4/ Footer : un pied de page simple où on retrouve les grandes lignes à travers de liens, une mini description de l'agence, l'adresse de l'agence, le numéro de 
+contact.
+
+5/Outils à utiliser pour le site vitrine
+
+Structure : HTML 5
+Style : Tailwind Css et CSS 
+Interactions : JavaScript
+format icône : SVG qualité vectorielle
+Font ou Typographie : Google Fonts police professionelle et sophistiquée
+1.Couleur principale Blanc  doit être représentée, utilisée à 70 %
+2.Couleur secondaire Or premium  pour les animations, les boutons CTA doit être représentée, utilisée à 20 %
+3.Couleur additionnelle pour le texte et autres( #000000) doit être représentée, utilisée à 10 %
+
+6/ Quelques informations supplémentaires : 
+- Fournir un menu hamburger professionel et premium 
+- Prendre en compte la résolution mobile(responsive design)
+- Des images vectorielles SVG de qualité et cohérentes pour les sections concernées.
+- Respecter chaque consigne du prompt, chaque élément fourni à insérer (Images, vidéos).
+- Des blocs épurés avec des badges et une animation hover réaliste.
+- Le style du site vitrine est en trois mots : corporate, premium, épuré.
+

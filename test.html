@@ -1,0 +1,517 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { 
+  Menu, X, Camera, Users, Mic, GlassWater, Utensils, Paintbrush, 
+  Music, Smile, Heart, Gift, Briefcase, GraduationCap, ChevronLeft, 
+  ChevronRight, Calendar, Clock, MapPin, Download, Search, 
+  Facebook, Instagram, Linkedin, MessageCircle, Send, CheckCircle2,
+  Filter, PlayCircle, Image as ImageIcon
+} from 'lucide-react';
+
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [reservationStep, setReservationStep] = useState(1);
+  const [filterDate, setFilterDate] = useState('Tous');
+  const [activeCategory, setActiveCategory] = useState('Tous');
+
+  // Configuration des Couleurs
+  const colors = {
+    gold: "#D4AF37",
+    black: "#000000",
+    white: "#FFFFFF"
+  };
+
+  const slides = [
+    {
+      url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
+      title: "Gala d'Excellence 2023",
+      description: "Une soirée de prestige organisée au cœur de Kinshasa pour les leaders d'industrie."
+    },
+    {
+      url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=2000",
+      title: "Union Royale",
+      description: "Célébration d'un mariage mémorable alliant tradition et modernité luxueuse."
+    },
+    {
+      url: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=2000",
+      title: "Conférence Panafricaine",
+      description: "Coordination logistique complète pour un sommet diplomatique de haut niveau."
+    }
+  ];
+
+  const services = [
+    { name: "Photographie", icon: <Camera size={24} />, img: "https://images.unsplash.com/photo-1452784444945-3f422708fe5e?auto=format&fit=crop&q=80&w=600" },
+    { name: "Accueil & Protocole", icon: <Users size={24} />, img: "https://images.unsplash.com/photo-1560439514-4e9645039924?auto=format&fit=crop&q=80&w=600" },
+    { name: "Maître de Cérémonie", icon: <Mic size={24} />, img: "https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&q=80&w=600" },
+    { name: "Cocktail", icon: <GlassWater size={24} />, img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600" },
+    { name: "Service Traiteur", icon: <Utensils size={24} />, img: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=600" },
+    { name: "Décoration", icon: <Paintbrush size={24} />, img: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=600" },
+    { name: "DJ", icon: <Music size={24} />, img: "https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?auto=format&fit=crop&q=80&w=600" },
+    { name: "Humoriste", icon: <Smile size={24} />, img: "https://images.unsplash.com/photo-1527224857830-43a7acc85260?auto=format&fit=crop&q=80&w=600" }
+  ];
+
+  const tasks = [
+    { title: "Organisation", desc: "Structuration globale de l'événement pour une fluidité sans faille." },
+    { title: "Planification", desc: "Établissement d'un rétroplanning rigoureux respectant vos échéances." },
+    { title: "Gestion", desc: "Maîtrise complète des ressources et des intervenants." },
+    { title: "Conception", desc: "Création d'un univers visuel et sensoriel unique." },
+    { title: "Coordination", desc: "Supervision en temps réel pour une exécution parfaite." },
+    { title: "Conseiller de suggestion", desc: "Expertise stratégique pour sublimer vos choix." },
+    { title: "Support Marketing", desc: "Conception de supports pour maximiser l'impact visuel." },
+    { title: "Budget", desc: "Optimisation financière garantissant le meilleur rapport qualité-prix." },
+    { title: "Feedback", desc: "Analyse post-événement pour une amélioration continue." }
+  ];
+
+  const galleryItems = [
+    { id: 1, date: "Octobre 2023", moment: "Allocution du MC", title: "Mariage Prestige", type: "image", url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800", details: { location: "Hôtel Fleuve Congo", mc: "Jean-Pierre", time: "19:30" } },
+    { id: 2, date: "Octobre 2023", moment: "Heure du repas", title: "Mariage Prestige", type: "video", url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800", details: { location: "Hôtel Fleuve Congo", mc: "Jean-Pierre", time: "21:00" } },
+    { id: 3, date: "Septembre 2023", moment: "Piste dansante", title: "Gala Corporate", type: "image", url: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800", details: { location: "Pullman Kinshasa", mc: "Sarah L.", time: "23:00" } },
+  ];
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+
+  const filteredGallery = useMemo(() => {
+    return galleryItems.filter(item => 
+      (filterDate === 'Tous' || item.date === filterDate) &&
+      (activeCategory === 'Tous' || item.moment === activeCategory)
+    );
+  }, [filterDate, activeCategory]);
+
+  return (
+    <div className="bg-white text-black font-sans selection:bg-[#D4AF37] selection:text-white overflow-x-hidden">
+      
+      {/* 1. HEADER PREMIUM */}
+      <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-4 px-6 md:px-12 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <span className="text-2xl font-bold tracking-tighter text-black uppercase">
+            Paulus <span className="text-[#D4AF37]">Event</span>
+          </span>
+        </div>
+
+        {/* Desktop Menu */}
+        <nav className="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-widest uppercase">
+          {['Paulus Event', 'Prestations', 'Evenements', 'Tâches', 'Réservation', 'Galérie', 'Contact'].map((link) => (
+            <a key={link} href={`#${link.toLowerCase().replace(' ', '-')}`} className="hover:text-[#D4AF37] transition-colors duration-300">
+              {link}
+            </a>
+          ))}
+        </nav>
+
+        {/* Mobile Menu Trigger */}
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden text-black">
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        {/* Mobile Sidebar */}
+        {isMenuOpen && (
+          <div className="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-8 text-xl font-light uppercase tracking-widest animate-in fade-in zoom-in">
+             {['Paulus Event', 'Prestations', 'Evenements', 'Tâches', 'Réservation', 'Galérie', 'Contact'].map((link) => (
+              <a 
+                key={link} 
+                href={`#${link.toLowerCase().replace(' ', '-')}`} 
+                onClick={() => setIsMenuOpen(false)}
+                className="hover:text-[#D4AF37] transition-colors"
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+        )}
+      </header>
+
+      {/* 2. HERO CAROUSEL */}
+      <section className="relative h-screen w-full overflow-hidden pt-16">
+        <div className="absolute inset-0">
+          {slides.map((slide, index) => (
+            <div 
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+            >
+              <img src={slide.url} alt={slide.title} className="w-full h-full object-cover scale-105" />
+              <div className="absolute inset-0 bg-black/30" />
+            </div>
+          ))}
+        </div>
+
+        {/* Description Overlay */}
+        <div className="absolute bottom-20 left-6 md:left-24 max-w-lg animate-in slide-in-from-left duration-700">
+          <div className="bg-white/90 backdrop-blur-md p-8 border-l-4 border-[#D4AF37]">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-[#D4AF37] mb-2">Exclusivité Paulus Event</h2>
+            <h1 className="text-3xl md:text-4xl font-light mb-4 text-black">{slides[currentSlide].title}</h1>
+            <p className="text-gray-700 leading-relaxed mb-6">{slides[currentSlide].description}</p>
+            <div className="flex items-center space-x-2">
+               <span className="h-[1px] w-8 bg-black"></span>
+               <span className="text-[10px] uppercase tracking-widest font-bold">Inspirer l'exceptionnel</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Pagination Buttons */}
+        <div className="absolute bottom-10 right-6 md:right-24 flex space-x-4">
+          <button 
+            onClick={prevSlide}
+            className="p-4 rounded-full border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button 
+            onClick={nextSlide}
+            className="p-4 rounded-full bg-[#D4AF37] text-white hover:scale-110 transition-all duration-300"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+      </section>
+
+      {/* 3. SECTIONS D'EXPOSITION */}
+
+      {/* Section: Paulus Event */}
+      <section id="paulus-event" className="py-24 px-6 md:px-24 bg-white">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <div className="inline-block p-2 bg-gray-50 mb-6">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">À propos de l'agence</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-light mb-8 leading-tight">
+              Transformer vos idées en <span className="font-semibold italic">expérience inoubliable</span>
+            </h2>
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              Basée à Kinshasa, Paulus Event est une structure florissante dédiée à l'excellence événementielle. 
+              Nous croyons que chaque détail compte pour créer des moments qui durent toute une vie.
+            </p>
+            <div className="space-y-6">
+              {[
+                { label: "Engagement total", icon: <CheckCircle2 className="text-[#D4AF37]" /> },
+                { label: "Excellence opérationnelle", icon: <CheckCircle2 className="text-[#D4AF37]" /> },
+                { label: "Professionnalisme absolu", icon: <CheckCircle2 className="text-[#D4AF37]" /> }
+              ].map((item, i) => (
+                <div key={i} className="flex items-center space-x-4 border-b border-gray-100 pb-4">
+                  {item.icon}
+                  <span className="uppercase text-sm font-semibold tracking-wider">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative">
+             <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#D4AF37]/10 -z-10 rounded-full blur-3xl"></div>
+             <img 
+               src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=800" 
+               className="w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl"
+               alt="Organisation Paulus Event"
+             />
+          </div>
+        </div>
+      </section>
+
+      {/* Section: Prestations */}
+      <section id="prestations" className="py-24 bg-gray-50 px-6 md:px-24">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl uppercase tracking-[0.2em] font-light mb-4">Nos Prestations</h2>
+          <div className="h-[2px] w-24 bg-[#D4AF37] mx-auto"></div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service, i) => (
+            <div key={i} className="group relative bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500">
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={service.img} 
+                  alt={service.name} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="text-[#D4AF37]">{service.icon}</div>
+                  <span className="text-[10px] font-bold uppercase tracking-tighter bg-black text-white px-3 py-1">Premium</span>
+                </div>
+                <h3 className="text-sm font-bold uppercase tracking-widest">{service.name}</h3>
+              </div>
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#D4AF37]/30 transition-all duration-300 pointer-events-none"></div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Section: Evenements */}
+      <section id="evenements" className="py-24 px-6 md:px-24 bg-white">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+          <div className="max-w-xl">
+            <h2 className="text-4xl font-light mb-4 uppercase tracking-tighter">Variété Événementielle</h2>
+            <p className="text-gray-500">Où vos idées prennent vie, peu importe la nature de la célébration.</p>
+          </div>
+          <div className="hidden md:block h-px flex-1 bg-gray-200 mx-12 mb-4"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-gray-200 border border-gray-200">
+          {[
+            { title: "Mariage", img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622" },
+            { title: "Anniversaire", img: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84" },
+            { title: "Conférence", img: "https://images.unsplash.com/photo-1540575861501-7cf05a4b125a" },
+            { title: "Funérailles", img: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3" },
+            { title: "Gala", img: "https://images.unsplash.com/photo-1505236858219-8359eb29e329" },
+            { title: "Festivals", img: "https://images.unsplash.com/photo-1459749411177-042180ce673c" }
+          ].map((item, i) => (
+            <div key={i} className="relative h-[300px] bg-white group overflow-hidden">
+              <img src={item.img + "?auto=format&fit=crop&q=80&w=600"} className="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-40" alt={item.title} />
+              <div className="absolute inset-0 flex flex-col items-center justify-center translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                 <h3 className="text-2xl font-light uppercase tracking-widest mb-4">{item.title}</h3>
+                 <button className="px-6 py-2 border border-black text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Découvrir</button>
+              </div>
+              <div className="absolute top-6 left-6 text-xs font-bold uppercase tracking-widest group-hover:hidden transition-all">{item.title}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Section: Tâche */}
+      <section id="tâches" className="py-24 bg-[#0a0a0a] text-white px-6 md:px-24">
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <h2 className="text-3xl md:text-4xl font-light mb-6 uppercase tracking-widest">Une Approche Méthodique</h2>
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Pour assurer le succès de chaque projet, Paulus Event déploie un écosystème de tâches structurées 
+            garantissant une livraison conforme aux plus hauts standards de l'agence.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {tasks.map((task, i) => (
+            <div key={i} className="p-8 border border-white/10 hover:border-[#D4AF37]/50 transition-colors group">
+              <div className="text-[#D4AF37] mb-4 text-xl font-bold">0{i+1}.</div>
+              <h3 className="text-xl font-semibold mb-3 uppercase tracking-wider">{task.title}</h3>
+              <p className="text-gray-500 group-hover:text-gray-300 transition-colors text-sm leading-relaxed">{task.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Section: Réservation */}
+      <section id="réservation" className="py-24 px-6 md:px-24 bg-white">
+        <div className="max-w-5xl mx-auto bg-gray-50 p-12 md:p-20 relative overflow-hidden">
+           <div className="absolute top-0 right-0 p-8 opacity-10">
+              <Send size={120} className="text-[#D4AF37]" />
+           </div>
+           
+           <div className="relative z-10">
+              <h2 className="text-4xl font-light mb-12 text-center uppercase tracking-widest">Procédure de Réservation</h2>
+              
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="space-y-6">
+                  <p className="text-gray-600 mb-8">Pour initier votre projet, veuillez préparer les informations suivantes :</p>
+                  <ul className="space-y-4">
+                    {[
+                      "Nom et Type de l'événement",
+                      "Date souhaitée",
+                      "Plage horaire (Début et Fin)",
+                      "Lieu de l'événement",
+                      "Nombre de participants prévu",
+                      "Budget estimatif"
+                    ].map((step, i) => (
+                      <li key={i} className="flex items-center space-x-3">
+                        <span className="w-8 h-8 rounded-full border border-[#D4AF37] text-[#D4AF37] flex items-center justify-center text-xs font-bold">{i+1}</span>
+                        <span className="font-medium text-sm uppercase tracking-wide">{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-white p-8 shadow-xl border-t-4 border-[#D4AF37] text-center">
+                  <h3 className="text-lg font-bold mb-6 uppercase tracking-widest">Avez-vous compris les informations à fournir ?</h3>
+                  <div className="flex flex-col space-y-4">
+                    <button 
+                      onClick={() => setReservationStep(2)}
+                      className="py-4 px-8 bg-black text-white hover:bg-[#D4AF37] transition-all duration-300 text-xs font-bold tracking-widest uppercase"
+                    >
+                      Oui, Continuer
+                    </button>
+                    <button 
+                      onClick={() => setReservationStep(1)}
+                      className="py-4 px-8 border border-gray-200 text-gray-500 hover:border-black transition-all text-xs font-bold tracking-widest uppercase"
+                    >
+                      Non, relire
+                    </button>
+                  </div>
+
+                  {reservationStep === 2 && (
+                    <div className="mt-8 animate-in zoom-in duration-500">
+                      <p className="text-xs text-gray-400 mb-4 italic uppercase">Cliquez ci-dessous pour nous contacter</p>
+                      <a 
+                        href="https://wa.me/243000000000" // Remplacez par le numéro réel
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="inline-flex items-center space-x-3 bg-[#25D366] text-white px-8 py-4 rounded-full hover:scale-105 transition-transform"
+                      >
+                        <MessageCircle size={24} />
+                        <span className="font-bold">WhatsApp Agence</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      {/* Section: Galérie (Portfolio) */}
+      <section id="galérie" className="py-24 bg-white px-6 md:px-24">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-16 space-y-8 md:space-y-0">
+          <div>
+            <h2 className="text-4xl font-light uppercase tracking-tighter">Galerie Exclusive</h2>
+            <p className="text-[#D4AF37] font-semibold text-xs tracking-widest uppercase mt-2">Revivre l'émotion</p>
+          </div>
+          
+          <div className="flex flex-wrap gap-4 justify-center">
+            {['Tous', 'Octobre 2023', 'Septembre 2023'].map(date => (
+              <button 
+                key={date}
+                onClick={() => setFilterDate(date)}
+                className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest border transition-all ${filterDate === date ? 'bg-black text-white border-black' : 'border-gray-200 text-gray-400 hover:border-black hover:text-black'}`}
+              >
+                {date}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Filtrage par moment de l'événement */}
+        <div className="flex flex-wrap gap-3 mb-12 pb-6 border-b border-gray-100">
+           {['Tous', "Allocution du MC", "Heure du repas", "Piste dansante"].map(cat => (
+             <button 
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest transition-all ${activeCategory === cat ? 'text-[#D4AF37]' : 'text-gray-400 hover:text-black'}`}
+             >
+               <Filter size={14} />
+               <span>{cat}</span>
+             </button>
+           ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredGallery.map((item) => (
+            <div key={item.id} className="group bg-gray-50 border border-gray-100">
+              <div className="relative h-72 overflow-hidden">
+                <img src={item.url} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={item.title} />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-4">
+                  <button className="p-3 bg-white text-black rounded-full hover:bg-[#D4AF37] hover:text-white transition-colors">
+                    <ImageIcon size={20} />
+                  </button>
+                  <button className="p-3 bg-white text-black rounded-full hover:bg-[#D4AF37] hover:text-white transition-colors">
+                    <Download size={20} />
+                  </button>
+                </div>
+                {item.type === 'video' && (
+                  <div className="absolute top-4 right-4 text-white">
+                    <PlayCircle size={24} />
+                  </div>
+                )}
+              </div>
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest">{item.date}</span>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{item.moment}</span>
+                </div>
+                <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
+                <div className="grid grid-cols-2 gap-4 text-[10px] text-gray-500 uppercase font-bold tracking-widest">
+                  <div className="flex items-center space-x-2">
+                    <MapPin size={12} className="text-[#D4AF37]" />
+                    <span>{item.details.location}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Mic size={12} className="text-[#D4AF37]" />
+                    <span>MC: {item.details.mc}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Clock size={12} className="text-[#D4AF37]" />
+                    <span>{item.details.time}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+           <button className="px-12 py-4 border-2 border-black text-xs font-bold uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all">
+             Consulter le catalogue complet
+           </button>
+        </div>
+      </section>
+
+      {/* Section: Contact (Sidebar-like icons as per prompt) */}
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-6 bg-white/80 backdrop-blur-md p-4 border border-gray-100 shadow-xl rounded-full">
+         <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors"><Facebook size={20} /></a>
+         <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors"><Instagram size={20} /></a>
+         <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors"><Linkedin size={20} /></a>
+         <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors"><MessageCircle size={20} /></a>
+      </div>
+
+      {/* 4. FOOTER */}
+      <footer id="contact" className="bg-[#050505] text-white pt-20 pb-10 px-6 md:px-24">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div className="col-span-1 md:col-span-1">
+            <h2 className="text-2xl font-bold tracking-tighter uppercase mb-6">
+              Paulus <span className="text-[#D4AF37]">Event</span>
+            </h2>
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+              L'excellence au service de vos événements les plus prestigieux. Basée à Kinshasa, 
+              nous créons l'inoubliable avec rigueur et passion.
+            </p>
+            <div className="flex space-x-4 md:hidden">
+               <Facebook size={18} className="text-gray-400" />
+               <Instagram size={18} className="text-gray-400" />
+               <MessageCircle size={18} className="text-gray-400" />
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-8">Navigation</h3>
+            <ul className="space-y-4 text-sm text-gray-400 uppercase tracking-wider font-medium">
+              <li><a href="#paulus-event" className="hover:text-white transition-colors">L'agence</a></li>
+              <li><a href="#prestations" className="hover:text-white transition-colors">Prestations</a></li>
+              <li><a href="#evenements" className="hover:text-white transition-colors">Événements</a></li>
+              <li><a href="#galérie" className="hover:text-white transition-colors">Galerie</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-8">Contact</h3>
+            <ul className="space-y-4 text-sm text-gray-400 font-medium">
+              <li className="flex items-center space-x-3 italic">
+                <MapPin size={16} className="text-[#D4AF37]" />
+                <span>Kinshasa, Gombe - RDC</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <MessageCircle size={16} className="text-[#D4AF37]" />
+                <span>+243 000 000 000</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <Send size={16} className="text-[#D4AF37]" />
+                <span>contact@paulusevent.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-8">Newsletter Luxe</h3>
+            <p className="text-xs text-gray-500 mb-4 uppercase tracking-tighter">Inscrivez-vous pour nos actualités exclusives</p>
+            <div className="flex">
+               <input type="email" placeholder="Email" className="bg-white/5 border border-white/10 px-4 py-2 w-full focus:outline-none focus:border-[#D4AF37] text-sm" />
+               <button className="bg-[#D4AF37] text-white px-4 py-2 hover:bg-white hover:text-black transition-colors">
+                 <Send size={16} />
+               </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 font-bold uppercase tracking-widest">
+          <p>© 2024 Paulus Event. Tous droits réservés.</p>
+          <div className="mt-4 md:mt-0 flex space-x-6">
+            <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>
+            <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
